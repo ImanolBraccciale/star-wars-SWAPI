@@ -1,5 +1,5 @@
 // URL base de tu API
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+const BASE_URL = "https://star-wars-swapi-1.onrender.com"
 
 // Función para hacer peticiones a la API
 const fetchFromAPI = async (endpoint: string, method = "GET", queryParams?: Record<string, string>) => {
@@ -14,6 +14,7 @@ const fetchFromAPI = async (endpoint: string, method = "GET", queryParams?: Reco
                 "Content-Type": "application/json",
             },
         };
+        console.log(`${BASE_URL}/${endpoint}${queryString}`);
         
         // Petición dinámica
         const response = await fetch(`${BASE_URL}/${endpoint}${queryString}`, options);
