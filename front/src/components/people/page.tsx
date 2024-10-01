@@ -100,7 +100,7 @@ const PeoplePage = () => {
     setExpandedCardId((prevId) => (prevId === id ? null : id)); // Cierra si es el mismo, abre si es diferente
 };
   return (
-    <div className="container mx-auto px-4 bg-black min-h-screen">
+    <div className="container mx-auto px-4 bg-black">
       <h2 className="text-3xl font-bold text-white mb-4">Personas</h2>
 
       <PeopleFilter

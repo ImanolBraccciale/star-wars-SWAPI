@@ -121,7 +121,7 @@ const PlanetsPage = () => {
     }
 
     return (
-        <div className="container mx-auto px-4 bg-black min-h-screen">
+        <div className="container mx-auto px-4 bg-black ">
             <h2 className="text-3xl font-bold text-white mb-4">Planetas</h2>
             <PlanetFilter
                 filters={filters}

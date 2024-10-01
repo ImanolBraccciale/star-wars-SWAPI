@@ -5,7 +5,7 @@ interface SkeletonLoaderProps {
 }
 
 const SkeletonLoader: React.FC<SkeletonLoaderProps> = ({ title }) => (
-    <div className="container mx-auto px-4 bg-black min-h-screen">
+    <div className="container mx-auto px-4 bg-black ">
         <h2 className="text-3xl font-bold text-white mb-4">{title}</h2>
         
         {/* Contenedor de Filtros (Skeleton) */}
