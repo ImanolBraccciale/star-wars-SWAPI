@@ -6,18 +6,28 @@ import { PeopleFilterBuilder } from '../../design/people';
 
 @Injectable()
 export class PeopleService {
-  constructor(@InjectModel(People.name) private peopleModel: Model<PeopleDocument>) {}
+  constructor(@InjectModel(People.name) private peopleModel: Model<PeopleDocument>) { }
 
   async create(createPeopleDto: Partial<People>): Promise<PeopleDocument> {
-     return  this.peopleModel.create(createPeopleDto);
+    return this.peopleModel.create(createPeopleDto);
   }
 
 
   async findAll(filters: any): Promise<People[]> {
-     const query = filters ? new PeopleFilterBuilder().build()(filters) : {};
-     if (filters?.name) {
-       query.name = { $regex: new RegExp(filters.name, 'i') }; 
-  }
+    const query = filters ? new PeopleFilterBuilder().build()(filters) : {};
+    if (filters?.name) {
+      query.name = { $regex: new RegExp(filters.name, 'i') };
+    }
     return this.peopleModel.find(query).exec();
+  }
+
+  //para que el Cron me mantenga los datos actualizados 1 vez a la semana
+  async deleteAll(): Promise<void> {
+    try {
+      await this.peopleModel.deleteMany({});
+      console.log('Todos los registros de personas han sido eliminados');
+    } catch (error) {
+      console.error('Error al eliminar todas las personas:', error);
+    }
   }
 }

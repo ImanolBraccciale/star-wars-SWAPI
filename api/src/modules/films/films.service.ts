@@ -19,6 +19,13 @@ export class FilmsService {
           }
         return this.filmsModel.find(query).exec();
     }
-
-
+    //para que el Cron me mantenga los datos actualizados 1 vez a la semana
+    async deleteAll(): Promise<void> {
+        try {
+          await this.filmsModel.deleteMany({}); 
+          console.log('Todos los registros de películas han sido eliminados');
+        } catch (error) {
+          console.error('Error al eliminar todas las películas:', error);
+        }
+      }
 }

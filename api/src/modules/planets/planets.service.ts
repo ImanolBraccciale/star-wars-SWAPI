@@ -19,4 +19,12 @@ export class PlanetsService {
       }
       return this.planetsModel.find(query).exec();
   }
+  async deleteAll(): Promise<void> {
+    try {
+      await this.planetsModel.deleteMany({});
+      console.log('Todos los registros de planetas han sido eliminados');
+    } catch (error) {
+      console.error('Error al eliminar todas las planetas:', error);
+    }
+  }
   }

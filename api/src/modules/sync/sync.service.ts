@@ -14,20 +14,33 @@ export class SyncService implements OnModuleInit {
     private readonly starshipsService: StarshipsService,
     private readonly planetsService: PlanetsService,
   ) {}
-
+  //apenas se monte el componente, que limpie la db y cargue con los datos mas recinetes
   async onModuleInit() {
+    await this.clearDatabase();
     await this.fetchAndStoreFilms();
     await this.fetchAndStorePeople();
     await this.fetchAndStoreStarships();
     await this.fetchAndStorePlanets();
   }
 
-  @Cron('0 * * * *') // Cada hora
+  @Cron('0 0 * * 0') // cada domingo
   async handleCron() {
+    await this.clearDatabase();
     await this.fetchAndStoreFilms();
     await this.fetchAndStorePeople();
     await this.fetchAndStoreStarships();
     await this.fetchAndStorePlanets();
+  }
+
+  private async clearDatabase() {
+    try {
+      await this.filmsService.deleteAll(); 
+      await this.peopleService.deleteAll(); 
+      await this.starshipsService.deleteAll(); 
+      await this.planetsService.deleteAll(); 
+    } catch (error) {
+      console.error('Error al limpiar la base de datos:', error);
+    }
   }
 
   private async fetchAndStoreFilms() {
@@ -46,7 +59,7 @@ export class SyncService implements OnModuleInit {
       console.error('Error al obtener películas:', error);
     }
   }
-
+  
   private async fetchAndStorePeople() {
     try {
       let url = 'https://swapi.dev/api/people/';

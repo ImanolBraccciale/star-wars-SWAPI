@@ -4,7 +4,7 @@ import PeoplePage from "@/components/people/page";
 import PlanetsPage from "@/components/PlanetsPage/page";
 import StarshipsPage from "@/components/StarshipsPage/page";
 import StarField from "@/styles/star";
-
+  
  
 export default function Home() {
   const tabs = [
@@ -15,7 +15,9 @@ export default function Home() {
   ];
 
   return (<>
-   <StarField />
+     <div style={{ position: 'relative', zIndex: 1 }}>
+      <StarField />
+    </div>
     <Tabs tabs={tabs} />
    </>
   );

@@ -6,17 +6,26 @@ import { StarshipsFilterBuilder } from '../../design/starships';
 
 @Injectable()
 export class StarshipsService {
-  constructor(@InjectModel(Starships.name) private starshipsModel: Model<StarshipsDocument>) {}
+  constructor(@InjectModel(Starships.name) private starshipsModel: Model<StarshipsDocument>) { }
 
   async create(createStarshipDto: Partial<Starships>): Promise<StarshipsDocument> {
     return this.starshipsModel.create(createStarshipDto);
 
   }
-   async findAll(filters?: any): Promise<Starships[]> {
+  async findAll(filters?: any): Promise<Starships[]> {
     const query = filters ? new StarshipsFilterBuilder().build()(filters) : {};
     if (filters?.name) {
       query.name = { $regex: new RegExp(filters.name, 'i') };
     }
     return this.starshipsModel.find(query).exec();
+  }
+
+  async deleteAll(): Promise<void> {
+    try {
+      await this.starshipsModel.deleteMany({});
+      console.log('Todos los registros de naves han sido eliminados');
+    } catch (error) {
+      console.error('Error al eliminar todas las naves:', error);
+    }
   }
 }
