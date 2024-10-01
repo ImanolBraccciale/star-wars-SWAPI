@@ -10,6 +10,9 @@ COPY package*.json ./
 # Instala las dependencias de la aplicación
 RUN npm install --omit=dev
 
+RUN npm install -g @nestjs/cli
+
+
 # Copia el resto de los archivos de la aplicación
 COPY . .
 
