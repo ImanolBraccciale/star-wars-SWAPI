@@ -1,36 +1,128 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+  
+ # Proyecto Swapi
+## Tabla de Contenidos
 
-First, run the development server:
+1. [Descripción](#descripción)
+2. [Estructura del Proyecto](#estructura-del-proyecto)
+3. [Componentes](#Componentes)
+4. [Imágenes](#imágenes)
+5. [Instrucciones para Ejecutar](#instrucciones-para-ejecutar-el-frontend)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Descripción
+Este proyecto consiste en una aplicación de Nextjs y Nestjs para una prueba Tecnica, pero deseo que sirva de guía para otra persona que lo necesite. 
+
+Estoy utilizando la Api SWAPI para traer información y almacenarla en mongoDB, pero como SWAPI no tiene IMAGENES, este proyecto no pudo aplicarse debido a que podia usar esa Api. Si es obligario para ustedes las imagenes, les recomiendo usar https://starwars-visualguide.com/#/ . Simplemente extraigan la info de Swapi, luego busquen por name exacto en visuaguide y guarden la imange.
+
+ Si a alguno le ha ayudo, denme una estrella. Les deseo lo mejor 
+
+
+
+
+## Estructura del Proyecto
+```
+/Star-Wrs-API
+    /api
+        /src
+            /design
+            /modules
+
+        /test
+    /front
+        /public
+        /src
+            /app
+            /components
+            /dtos
+            /hooks
+            /pages
+            /styles
+            /utils
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Componentes
+Desde el backend se sigue la estructura del patrón de diseño modular que establece Nestjs en su documentación, se crea una carpeta modulo que respeta la entidad de cada servicio (films,people,starships y planets).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Además iimplementé un CRON para que cuando sea Domingo y apenas inicie el servidor traiga la información mas reciente de la API mientras borra el contenido actual, esto es para mantener la información actualizada
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+En la carpeta design, se concentra funciones que utilizarán algún patrón de diseño (recomiendo que cada modulo tenga el propio por si desean hacer cambios particulares).
 
-## Learn More
+Mientras que en el front  se sigue un Patrón de componentes para su máxima reutilización, esto facilita y acorta el tiempo  en proyectos chicos y grandes.
 
-To learn more about Next.js, take a look at the following resources:
+Para base de datos utilicé monngoDB que recomiendo siempre establecer un filtro de IP para evitar problemas, se deja un ejemplo de como debe quedar. PSD:"Recuerden sacar los <>"
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Imágenes
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+![Home](/main.png)
+![Card](/object.png)
+![Search bar](/search.png)
+![Item finded](/searchFind.png)
+![Skeleton](/skel.png)
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+5. **Instrucciones para Ejecutar**
+
+   1. **Clona el repositorio**:
+      ```bash
+      git clone https://github.com/tu_usuario/tu_repositorio.git
+      ```
+
+   2. **Navega al directorio del proyecto**:
+      ```bash
+      cd tu_repositorio
+      ```
+
+   3. **Instala las dependencias**:
+      Asegúrate de tener [Node.js](https://nodejs.org/) instalado. Luego, ejecuta:
+       ```bash
+      cd api
+      ```
+        ```bash
+      cd front
+      ```
+      y ejecuta en cada uno
+      ```bash
+      npm install 
+      ```
+      o si usas Yarn:
+      ```bash
+      yarn install
+      ```
+
+   4. **Inicia el servidor de desarrollo**:
+      Ejecuta el siguiente comando para iniciar la aplicación en modo desarrollo:
+      ```bash
+      npm run dev en front
+      ```
+       ```bash
+      npm start en back
+      ```
+      o si usas Yarn:
+      ```bash
+      yarn dev
+      ```
+
+   5. **Accede a la aplicación**:
+      Abre tu navegador y visita [http://localhost:3000](http://localhost:3000) para ver la aplicación en ejecución.
+
+   6. **Construye la aplicación para producción**:
+      Para crear una versión optimizada para producción, ejecuta:
+      ```bash
+      npm run build y npm start para api
+      ```
+      o si usas Yarn:
+      ```bash
+      yarn build
+      ```
+
+   7. **Ejecuta la aplicación en modo producción**:
+      Una vez construida, puedes ejecutar la aplicación en modo producción con:
+      ```bash
+      npm start
+      ```
+      o si usas Yarn:
+      ```bash
+      yarn start
+      ```
+ 
