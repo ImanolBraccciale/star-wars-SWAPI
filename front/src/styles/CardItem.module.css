@@ -1,0 +1,50 @@
+/* src/styles/CardItem.module.css */
+.cardItem {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 16px;
+    margin: 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease-in-out, transform 0.3s ease;
+  }
+  
+  .cardItem:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transform: translateY(-5px);
+  }
+  
+  .cardImage {
+    width: 100%;
+    height: auto;
+    max-height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+  
+  .cardTitle {
+    font-size: 1.4rem;
+    margin-top: 10px;
+  }
+  
+  .cardDescription {
+    font-size: 1rem;
+    color: #666;
+    margin: 10px 0;
+  }
+  
+  .cardButton {
+    background-color: #0070f3;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .cardButton:hover {
+    background-color: #005bb5;
+  }
+  

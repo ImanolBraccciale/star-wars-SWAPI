@@ -1,0 +1,63 @@
+/* Navbar.module.css */
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Para alinear la lista de navegación y la barra de búsqueda */
+  background-color: #333; /* Ajusta según tus necesidades */
+  padding: 10px;
+  color: black;
+}
+
+.navList {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.navItem {
+  margin-right: 20px; /* Espacio entre los elementos de la lista */
+}
+
+.searchContainer {
+  position: relative; /* Para la posición de la lista desplegable */
+}
+
+.searchInput {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.dropdown {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
+  position: absolute; /* Para posicionar debajo del input */
+  z-index: 1000; /* Para asegurarse de que esté por encima de otros elementos */
+  max-height: 200px; /* Limita la altura del dropdown */
+  overflow-y: auto; /* Agrega desplazamiento si hay muchos resultados */
+  width: 100%; /* Asegúrate de que el ancho coincida con el input */
+}
+
+.dropdownItem {
+  padding: 10px; /* Espaciado interno */
+  cursor: pointer; /* Cambia el cursor al pasar el mouse */
+}
+
+.dropdownItem:hover {
+  background-color: #f0f0f0; /* Efecto al pasar el mouse */
+}
+.searchButton {
+  padding: 10px 15px; /* Espaciado interno del botón */
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff; /* Color de fondo del botón */
+  color: white; /* Texto en blanco */
+  cursor: pointer; /* Cambia el cursor al pasar el mouse */
+  transition: background-color 0.3s; /* Añadimos una transición para el hover */
+}
+
+.searchButton:hover {
+  background-color: #0056b3; /* Color más oscuro al pasar el mouse */
+}

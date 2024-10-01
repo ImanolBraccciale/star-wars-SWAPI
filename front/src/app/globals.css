@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+.tabHeaders {
+  display: flex;
+  cursor: pointer;
+  margin-bottom: 16px;
+}
+
+.tab {
+  padding: 10px 20px;
+  border: 1px solid #ccc;
+  border-bottom: none;
+  margin-right: 5px;
+  transition: background-color 0.3s;
+}
+
+.activeTab {
+  background-color: #f0f0f0;
+  font-weight: bold;
+}
+
+.tabContent {
+  border: 1px solid #ccc;
+  padding: 16px;
+  background-color: #fff;
+}
+.expandable-content {
+  max-height: 0; /* Inicialmente colapsado */
+  overflow: hidden; /* Oculta el contenido que excede la altura */
+  transition: max-height 0.3s ease; /* Transición suave */
+}
+
+.expandable-content.expanded {
+  max-height: 1000px; /* Un valor alto para permitir la expansión */
+}
+.transparent-bg {
+  background-color: rgba(31, 41, 55, 0.866); /* Color de fondo con transparencia */
+}
+.container{
+  background-color: rgba(12, 16, 22, 0.176); /* Color de fondo con transparencia */
+
+}

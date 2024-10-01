@@ -1,0 +1,32 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.listItem {
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  position: relative; /* Para que el contenido expandido se posicione correctamente */
+}
+
+.listItem h3 {
+  margin: 0;
+  font-size: 1.2em;
+}
+
+.listItem div {
+  margin-top: 5px;
+}
+.expandable-content {
+  max-height: 0; /* Inicialmente colapsado */
+  overflow: hidden; /* Oculta el contenido que excede la altura */
+  transition: max-height 0.3s ease; /* Transición suave */
+}
+
+.expandable-content.expanded {
+  max-height: 1000px; /* Un valor alto para permitir la expansión */
+}

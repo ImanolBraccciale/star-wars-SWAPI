@@ -1,0 +1,23 @@
+/* FilterSelects.module.css */
+.filterContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 10px; /* Espacio entre los selectores */
+    margin: 10px 0; /* Margen superior e inferior */
+}
+
+ 
+.select {
+    padding: 8px; /* Espaciado interno */
+    border: 1px solid #ccc; /* Borde */
+    border-radius: 4px; /* Esquinas redondeadas */
+    font-size: 14px; /* Tamaño de fuente */
+    cursor: pointer; /* Cambia el cursor al pasar por encima */
+    width: 200px; /* Ancho fijo */
+}
+
+.select:focus {
+    border-color: #0070f3; /* Color del borde al enfocarse */
+    outline: none; /* Sin contorno */
+    box-shadow: 0 0 5px rgba(0, 112, 243, 0.5); /* Sombra al enfocarse */
+}
