@@ -1,5 +1,5 @@
 // URL base de tu API
-const BASE_URL = "http://localhost:4000";
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 // Función para hacer peticiones a la API
 const fetchFromAPI = async (endpoint: string, method = "GET", queryParams?: Record<string, string>) => {

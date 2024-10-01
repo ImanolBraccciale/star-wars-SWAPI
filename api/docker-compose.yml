@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "4000:4000"
+    environment:
+      DB_URLMONGO: mongodb://mongo:27017/Starwars?useNewUrlParser=true&useUnifiedTopology=true
+      DB_URL: mongodb://mongo:27017/Starwars
+    depends_on:
+      - mongo
+
+volumes:
+  mongo-data:
