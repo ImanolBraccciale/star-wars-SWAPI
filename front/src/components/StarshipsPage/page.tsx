@@ -6,6 +6,7 @@ import ExpandableCard from '../ExpandableCard';
 import SkeletonLoader from '../Skeleton';
 import { sessionStorageHandler } from '@/utils/sessionStorageHandler';
 import StarshipFilter from '../Filters/FilterStarship';
+import Pagination from '../Pagination';
 
 const StarshipsPage = () => {
     const [starships, setStarships] = useState<CreateStarshipDto[]>([]);
@@ -14,7 +15,7 @@ const StarshipsPage = () => {
     const [error, setError] = useState<string | null>(null);
     const [uniqueCrewValues, setUniqueCrewValues] = useState<number[]>([]);
     const [uniquePassengerValues, setUniquePassengerValues] = useState<number[]>([]);
-    
+    const [expandedCardId, setExpandedCardId] = useState<string | null>(null);
     const [filters, setFilters] = useState({
         crew: 0,
         passengers: 0,
@@ -39,8 +40,7 @@ const StarshipsPage = () => {
     const fetchStarships = async (filters?: Record<string, string>) => {
         const localStarships = sessionStorageHandler.getItem('starships');
         if (localStarships && !filters) {
-            setStarships(localStarships);
-            setFilteredStarships(localStarships);
+             setFilteredStarships(localStarships);
             extractUniqueValues(localStarships);
             setLoading(false);
             return;
@@ -48,8 +48,7 @@ const StarshipsPage = () => {
         try {
             setLoading(true);
             const data = await getStarships(filters);  // Petición con filtros
-            setStarships(data);
-            setFilteredStarships(data);
+             setFilteredStarships(data);
             extractUniqueValues(data);
             sessionStorageHandler.setItem('starships', data);
         } catch (error) {
@@ -70,21 +69,21 @@ const StarshipsPage = () => {
         });
     };
 
-    const applyFilters =async () => {
-        // Enviar los filtros como parámetros en la petición GET
+    const applyFilters = async () => {
         const queryParams: Record<string, string> = {};
         if (filters.crew > 0) queryParams.crew = filters.crew.toString();
         if (filters.passengers > 0) queryParams.passengers = filters.passengers.toString();
         const data = await getStarships(queryParams);  // Petición con filtros
-        setStarships(data);
-    };
+        setFilteredStarships(data);
+        setCurrentPage(1)
+        };
 
     const resetFilters = () => {
         setFilters({
             crew: 0,
             passengers: 0,
         });
-        fetchStarships();  // Restablece los filtros haciendo la petición sin parámetros
+        fetchStarships();   
     };
 
     if (loading) {
@@ -93,14 +92,17 @@ const StarshipsPage = () => {
     if (error) return <div className="text-red-500">{error}</div>;
 
     // Cálculos de paginación
-    const indexOfLastStarship = currentPage * itemsPerPage;
-    const indexOfFirstStarship = indexOfLastStarship - itemsPerPage;
-    const currentStarships = filteredStarships.slice(indexOfFirstStarship, indexOfLastStarship);
     const totalPages = Math.ceil(filteredStarships.length / itemsPerPage);
-
+    const currentStarships = filteredStarships.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+    const onPageChange = (page: number) => {
+        setCurrentPage(page);
+    };
+    const handleCardToggle = (id: string) => {
+        setExpandedCardId((prevId) => (prevId === id ? null : id)); // Cierra si es el mismo, abre si es diferente
+    };
     return (
         <div className="container mx-auto px-4 bg-black min-h-screen">
-            <h1 className="text-3xl font-bold text-white mb-4">Naves</h1>
+            <h2 className="text-3xl font-bold text-white mb-4">Naves</h2>
             <StarshipFilter
                 filters={filters}
                 onFilterChange={onFilterChange}
@@ -134,26 +136,18 @@ const StarshipsPage = () => {
                                 <p className="mb-2">Editado: {starship.edited ? new Date(starship.edited).toLocaleString() : 'No disponible'}</p>
                             </div>
                         }
+                        isExpanded={expandedCardId === starship._id} // Comprueba si este card debe estar expandido
+                        onToggle={() => handleCardToggle(starship._id)} // Pasa la función de toggle
                     />
                 ))}
             </div>
 
-            {/* Controles de Paginación */}
-            <div className="flex justify-center mt-4">
-                {Array.from({ length: totalPages }, (_, index) => (
-                    <button
-                        key={index}
-                        onClick={() => setCurrentPage(index + 1)}
-                        className={`mx-1 px-4 py-2 border rounded transition-colors duration-200 ${
-                            currentPage === index + 1
-                                ? 'bg-blue-500 text-white' // Estilo para la página activa
-                                : 'bg-gray-700 text-white hover:bg-gray-600' // Estilo para las páginas inactivas
-                        }`}
-                    >
-                        {index + 1}
-                    </button>
-                ))}
-            </div>
+           {/* Usar el componente de Paginación */}
+           <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={onPageChange}
+            />
         </div>
     );
 };

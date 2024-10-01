@@ -7,12 +7,13 @@ import ExpandableCard from '../ExpandableCard';
 import SkeletonLoader from '../Skeleton';
 import { sessionStorageHandler } from '@/utils/sessionStorageHandler';
 import PeopleFilter from '../Filters/Filter';
+import Pagination from '../Pagination'; // Asegúrate de importar el componente de paginación
 
 const PeoplePage = () => {
   const [people, setPeople] = useState<CreatePeopleDto[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-
+  const [expandedCardId, setExpandedCardId] = useState<string | null>(null);
   const [filters, setFilters] = useState({
     gender: 'all',
     height: 0,
@@ -70,6 +71,7 @@ const PeoplePage = () => {
     // Obtener las personas filtradas
     const filteredPeople = await getPeople(validFilters);
     setPeople(filteredPeople); // Aquí se actualiza el estado con los datos filtrados
+    setCurrentPage(1)
   };
 
   const resetFilters = () => {
@@ -89,15 +91,17 @@ const PeoplePage = () => {
   const totalPages = Math.ceil(people.length / itemsPerPage);
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
-
   if (loading) {
     return <SkeletonLoader title="Cargando Personas..." />;
   }
   if (error) return <div className="text-red-500">{error}</div>;
-
+  
+  const handleCardToggle = (id: string) => {
+    setExpandedCardId((prevId) => (prevId === id ? null : id)); // Cierra si es el mismo, abre si es diferente
+};
   return (
     <div className="container mx-auto px-4 bg-black min-h-screen">
-      <h1 className="text-3xl font-bold text-white mb-4">Personas</h1>
+      <h2 className="text-3xl font-bold text-white mb-4">Personas</h2>
 
       <PeopleFilter
         filters={filters}
@@ -126,22 +130,17 @@ const PeoplePage = () => {
                 <p className="mb-2">Editado: {person.edited ? new Date(person.edited).toLocaleString() : 'No disponible'}</p>
               </div>
             }
+            isExpanded={expandedCardId === person._id} 
+            onToggle={() => handleCardToggle(person._id)} 
           />
         ))}
       </div>
 
-      {/* Componente de Paginación */}
-      <div className="flex justify-center mt-4">
-        {Array.from({ length: totalPages }, (_, index) => (
-          <button
-            key={index + 1}
-            onClick={() => paginate(index + 1)}
-            className={`mx-1 px-4 py-2 border rounded ${currentPage === index + 1 ? 'bg-blue-500 text-white' : 'bg-gray-700 text-white'}`}
-          >
-            {index + 1}
-          </button>
-        ))}
-      </div>
+       <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={paginate}
+      />
 
     </div>
   );

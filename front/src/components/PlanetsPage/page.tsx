@@ -16,6 +16,7 @@ const PlanetsPage = () => {
     const [uniquePopulationValues, setUniquePopulationValues] = useState<string[]>([]);
     const [uniqueClimateValues, setUniqueClimateValues] = useState<string[]>([]);
     const [uniqueTerrainValues, setUniqueTerrainValues] = useState<string[]>([]);
+    const [expandedCardId, setExpandedCardId] = useState<string | null>(null);
 
     const [filters, setFilters] = useState({
         population: '',
@@ -42,7 +43,9 @@ const PlanetsPage = () => {
         setUniqueClimateValues(Array.from(climateSet));
         setUniqueTerrainValues(Array.from(terrainSet));
     };
-
+    const handleCardToggle = (id: string) => {
+        setExpandedCardId((prevId) => (prevId === id ? null : id)); // Cierra si es el mismo, abre si es diferente
+    };
     const fetchPlanets = async (filters?: Record<string, string>) => {
         const localPlanets = sessionStorageHandler.getItem('planets');
         if (localPlanets && !filters) {
@@ -84,6 +87,7 @@ const PlanetsPage = () => {
         if (filters.terrain) queryParams.terrain = filters.terrain;
         const data = await getPlanets(queryParams);
         setFilteredPlanets(data);
+        setCurrentPage(1); // Reiniciar a la primera página al aplicar filtros
     };
 
     const resetFilters = () => {
@@ -118,7 +122,7 @@ const PlanetsPage = () => {
 
     return (
         <div className="container mx-auto px-4 bg-black min-h-screen">
-            <h1 className="text-3xl font-bold text-white mb-4">Planetas</h1>
+            <h2 className="text-3xl font-bold text-white mb-4">Planetas</h2>
             <PlanetFilter
                 filters={filters}
                 onFilterChange={onFilterChange}
@@ -148,10 +152,14 @@ const PlanetsPage = () => {
                                 <p className="mb-2">Editado: {planet.edited ? new Date(planet.edited).toLocaleString() : 'No disponible'}</p>
                             </div>
                         }
+                        isExpanded={expandedCardId === planet._id} // Comprueba si este card debe estar expandido
+                        onToggle={() => handleCardToggle(planet._id)} // Pasa la función de toggle
+                        
                     />
                 ))}
             </div>
      
+            {/* Componente de Paginación */}
             <div className="flex justify-center mt-4">
                 {Array.from({ length: totalPages }, (_, index) => (
                     <button

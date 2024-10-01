@@ -4,7 +4,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between; /* Para alinear la lista de navegación y la barra de búsqueda */
-  background-color: #333; /* Ajusta según tus necesidades */
+  background-color: #333333a5; /* Ajusta según tus necesidades */
   padding: 10px;
   color: black;
 }
@@ -21,36 +21,41 @@
 }
 
 .searchContainer {
-  position: relative; /* Para la posición de la lista desplegable */
+  position: relative; 
+  margin: 0 auto;
 }
 
 .searchInput {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  width: 300px;  
 }
+
 .dropdown {
   border: 1px solid #ccc;
   border-radius: 4px;
   background-color: white;
-  position: absolute; /* Para posicionar debajo del input */
-  z-index: 1000; /* Para asegurarse de que esté por encima de otros elementos */
-  max-height: 200px; /* Limita la altura del dropdown */
-  overflow-y: auto; /* Agrega desplazamiento si hay muchos resultados */
-  width: 100%; /* Asegúrate de que el ancho coincida con el input */
+  position: absolute;  
+  z-index: 1000;  
+  max-height: 200px;  
+  overflow-y: auto;  
+  width: 300px; 
 }
 
 .dropdownItem {
-  padding: 10px; /* Espaciado interno */
-  cursor: pointer; /* Cambia el cursor al pasar el mouse */
+  padding: 10px;  
+  cursor: pointer; 
 }
 
 .dropdownItem:hover {
   background-color: #f0f0f0; /* Efecto al pasar el mouse */
 }
+
 .searchButton {
-  padding: 10px 15px; /* Espaciado interno del botón */
+  padding: 10px 5px;  
   border: none;
+  margin-left: 1em; 
   border-radius: 4px;
   background-color: #007bff; /* Color de fondo del botón */
   color: white; /* Texto en blanco */

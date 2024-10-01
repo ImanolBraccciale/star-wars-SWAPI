@@ -3,14 +3,15 @@ import React, { useState, useEffect } from 'react';
 interface ExpandableCardProps {
     title: string;
     content: React.ReactNode;
+    isExpanded: boolean; // Prop para saber si está expandido
+    onToggle: () => void; // Prop para manejar el toggle
 }
 
-const ExpandableCard: React.FC<ExpandableCardProps> = ({ title, content }) => {
-    const [isExpanded, setIsExpanded] = useState(false);
+const ExpandableCard: React.FC<ExpandableCardProps> = ({ title, content, isExpanded, onToggle }) => {
     const [spanValue, setSpanValue] = useState(1);
 
     const toggleExpand = () => {
-        setIsExpanded(!isExpanded);
+        onToggle(); // Llama a la función de toggle pasada desde el padre
     };
 
     useEffect(() => {
@@ -53,4 +54,5 @@ const ExpandableCard: React.FC<ExpandableCardProps> = ({ title, content }) => {
         </div>
     );
 };
-export default ExpandableCard
+
+export default ExpandableCard;

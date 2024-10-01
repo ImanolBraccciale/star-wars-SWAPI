@@ -7,11 +7,14 @@ import SkeletonLoader from '../Skeleton';
 import { sessionStorageHandler } from '@/utils/sessionStorageHandler';
 import { CreateFilmDto } from '@/dtos/dtos';
 import FilmFilter from '../Filters/FilterFilm';
+import Pagination from '../Pagination'; // Asegúrate de que la ruta sea correcta
 
 const FilmPage = () => {
     const [films, setFilms] = useState<CreateFilmDto[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
+    const [expandedCardId, setExpandedCardId] = useState<string | null>(null);
+
     const [filters, setFilters] = useState({
         episode_id: 0,
         openingCrawl: '',
@@ -76,27 +79,17 @@ const FilmPage = () => {
     const currentFilms = films.slice(indexOfFirstFilm, indexOfLastFilm);
     const totalPages = Math.ceil(films.length / filmsPerPage);
 
-    const handleNextPage = () => {
-        if (currentPage < totalPages) {
-            setCurrentPage(currentPage + 1);
-        }
-    };
-
-    const handlePreviousPage = () => {
-        if (currentPage > 1) {
-            setCurrentPage(currentPage - 1);
-        }
-    };
-
     if (loading) return <SkeletonLoader title="Cargando Películas..." />;
     if (error) return <div className="text-red-500">{error}</div>;
-
+   
+    const handleCardToggle = (id: string) => {
+        setExpandedCardId((prevId) => (prevId === id ? null : id)); // Cierra si es el mismo, abre si es diferente
+    };
     return (
         <div className="container mx-auto px-4 bg-black min-h-screen">
-            <h1 className="text-3xl font-bold text-white mb-4">Películas</h1>
+            <h2 className="text-3xl font-bold text-white mb-4">Películas</h2>
 
-            {/* Filtros de películas */}
-            <FilmFilter
+             <FilmFilter
                 filters={filters}
                 onFilterChange={handleFilterChange}
                 onApplyFilters={applyFilters}
@@ -117,20 +110,19 @@ const FilmPage = () => {
                                 <p className="mb-2">URL: <a href={film.url} className="text-blue-400 hover:underline" target="_blank" rel="noopener noreferrer">{film.url}</a></p>
                             </div>
                         }
+                        isExpanded={expandedCardId === film._id} // Comprueba si este card debe estar expandido
+                        onToggle={() => handleCardToggle(film._id)} // Pasa la función de toggle
+                       
                     />
                 ))}
             </div>
 
             {/* Componente de Paginación */}
-            <div className="flex justify-between mt-4">
-                <button onClick={handlePreviousPage} disabled={currentPage === 1} className="bg-blue-500 text-white px-4 py-2 rounded">
-                    Anterior
-                </button>
-                <span className="text-white">Página {currentPage} de {totalPages}</span>
-                <button onClick={handleNextPage} disabled={currentPage === totalPages} className="bg-blue-500 text-white px-4 py-2 rounded">
-                    Siguiente
-                </button>
-            </div>
+            <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={setCurrentPage} // Actualiza la página actual al hacer clic en un número
+            />
         </div>
     );
 };
