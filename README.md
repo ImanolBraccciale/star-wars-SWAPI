@@ -53,11 +53,11 @@ Para base de datos utilicé monngoDB que recomiendo siempre establecer un filtro
 
 # Imágenes
 
-![Home](/main.png)
-![Card](/object.png)
-![Search bar](/search.png)
-![Item finded](/searchFind.png)
-![Skeleton](/skel.png)
+![Home](/front/public/main.png)
+![Card](/front/public//object.png)
+![Search bar](/front/public//search.png)
+![Item finded](/front/public//searchFind.png)
+![Skeleton](/front/public//skel.png)
 
 
 
