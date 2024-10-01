@@ -13,7 +13,7 @@ import * as dotenv from 'dotenv';
 import { StarshipsModule } from './modules/starships/starships.module';
 
 dotenv.config();
-const DB_URI=process.env.DB_URL!
+const DB_URI="mongodb+srv://imanol11699:aUsBXKpc7TJM1MkQ@cluster0.kdxds.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 @Module({
   imports: [PeopleModule, 
     FilmsModule,
