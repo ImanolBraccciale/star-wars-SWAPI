@@ -70,6 +70,7 @@ const StarshipsPage = () => {
     };
 
     const applyFilters = async () => {
+        //ejemplo de peticion al back para filtrar
         const queryParams: Record<string, string> = {};
         if (filters.crew > 0) queryParams.crew = filters.crew.toString();
         if (filters.passengers > 0) queryParams.passengers = filters.passengers.toString();

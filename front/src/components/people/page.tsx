@@ -58,20 +58,13 @@ const PeoplePage = () => {
   const applyFilters = async () => {
     const validFilters: { [key: string]: string } = {};
 
-    if (filters.gender !== 'all') {
-      validFilters.gender = filters.gender;
-    }
-    if (filters.height > 0) {
-      validFilters.height = filters.height.toString();
-    }
-    if (filters.birthYear > 0) {
-      validFilters.birth_year = `${filters.birthYear}BBY`;
-    }
+    if (filters.gender !== 'all') validFilters.gender = filters.gender;
+    if (filters.height > 0) validFilters.height = filters.height.toString();
+    if (filters.birthYear > 0) validFilters.birth_year = `${filters.birthYear}BBY`;
 
-    // Obtener las personas filtradas
     const filteredPeople = await getPeople(validFilters);
-    setPeople(filteredPeople); // Aquí se actualiza el estado con los datos filtrados
-    setCurrentPage(1)
+    setPeople(filteredPeople);
+    setCurrentPage(1);
   };
 
   const resetFilters = () => {

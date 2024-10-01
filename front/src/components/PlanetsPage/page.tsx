@@ -80,16 +80,19 @@ const PlanetsPage = () => {
         });
     };
 
-    const applyFilters = async () => {
-        const queryParams: Record<string, string> = {};
-        if (filters.population) queryParams.population = filters.population;
-        if (filters.climate) queryParams.climate = filters.climate;
-        if (filters.terrain) queryParams.terrain = filters.terrain;
-        const data = await getPlanets(queryParams);
-        setFilteredPlanets(data);
-        setCurrentPage(1); // Reiniciar a la primera página al aplicar filtros
+    const applyFilters = () => {
+        //ejemplo de filtrado en el front
+        const filtered = planets.filter(planet => {
+            const matchesPopulation = filters.population ? planet.population === filters.population : true;
+            const matchesClimate = filters.climate ? planet.climate.includes(filters.climate) : true;
+            const matchesTerrain = filters.terrain ? planet.terrain.includes(filters.terrain) : true;
+            return matchesPopulation && matchesClimate && matchesTerrain;
+        });
+        
+        setFilteredPlanets(filtered);
+        setCurrentPage(1);
     };
-
+    
     const resetFilters = () => {
         setFilters({
             population: '',
